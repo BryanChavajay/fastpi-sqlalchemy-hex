@@ -23,7 +23,7 @@ class UserModel(Base):
 
 
 class ExpenseCategoryModel(Base):
-    __tablenmae__ = "categorias_gastos"
+    __tablename__ = "categorias_gastos"
 
     category_id = Column("id_categoria", Integer, primary_key=True, index=True)
     category_name = Column("nombre_categoria", String(50))
