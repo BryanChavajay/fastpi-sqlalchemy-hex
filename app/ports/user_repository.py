@@ -22,7 +22,7 @@ class UserRepository(ABC):
         pass
 
     @abstractmethod
-    def save(self, user: UserInDB) -> User:
+    def save(self, user: UserInDB, categories: list[str]) -> User:
         pass
 
     @abstractmethod

@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 
 from app.ports.user_repository import UserRepository
-from app.infrastructure.postgres.sqlalchemy_models import UserModel
+from app.infrastructure.postgres.sqlalchemy_models import UserModel, ExpenseCategoryModel, UserCategory
 from app.domain.user.entities import User, UserInDB, UpdatedUserDB
 
 
@@ -41,9 +41,14 @@ class SQLAlchemyUserRepository(UserRepository):
             return None
         return User.model_validate(data)
 
-    def save(self, user: UserInDB) -> User:
+    def save(self, user: UserInDB, categories: list[str]) -> User:
         user_db = UserModel(**user.model_dump())
         self.db.add(user_db)
+        self.db.flush()
+        default_categories = [ExpenseCategoryModel(category_name=category) for category in categories]
+        self.db.add_all(default_categories)
+        self.db.flush()
+        user_db.categories.extend(default_categories)
         self.db.commit()
         self.db.refresh(user_db)
         return User.model_validate(user_db)

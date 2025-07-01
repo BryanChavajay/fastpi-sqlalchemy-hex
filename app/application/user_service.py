@@ -39,8 +39,16 @@ class UserService:
         user_db = UserInDB(
             **user.model_dump(exclude={"password"}), password=hashed_password
         )
-
-        new_user = self.user_repository.save(user_db)
+        default_categories = [
+            "Comestibles",
+            "Ocio",
+            "Electrónica",
+            "Utilidades",
+            "Ropa",
+            "Salud",
+            "Otros",
+        ]
+        new_user = self.user_repository.save(user_db, default_categories)
         return new_user
 
     def update_user(self, user: UpdatedUser) -> User:
