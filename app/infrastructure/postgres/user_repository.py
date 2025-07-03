@@ -76,6 +76,6 @@ class SQLAlchemyUserRepository(UserRepository):
 
         stmt_check = select(UserModel).where(UserModel.user_code == user_code)
         deleted_user = self.db.execute(stmt_check).scalar_one_or_none()
-        if not deleted_user:
-            return True
-        return False
+        if deleted_user:
+            return False
+        return True

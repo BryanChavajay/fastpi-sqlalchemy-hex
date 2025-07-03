@@ -1,5 +1,6 @@
-from datetime import timedelta, datetime, timezone
+from datetime import timedelta, datetime, timezone, date
 
+from zoneinfo import ZoneInfo
 import jwt
 from passlib.context import CryptContext
 
@@ -27,3 +28,8 @@ def create_access_token(subject: dict, expires_delta: timedelta | None = None) -
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET, algorithm=ALGORITHM)
     return encoded_jwt
+
+
+def obtener_fecha_actual() -> date:
+    zona = ZoneInfo("America/Guatemala")
+    return datetime.now(zona).date()

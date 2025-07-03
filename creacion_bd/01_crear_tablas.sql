@@ -11,7 +11,7 @@ CREATE TABLE usuarios(
 
 CREATE TABLE categorias_gastos(
     id_categoria SERIAL PRIMARY KEY NOT NULL,
-    nombre_categoria
+    nombre_categoria VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE usuarios_categorias(
